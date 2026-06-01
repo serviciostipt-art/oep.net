@@ -1,0 +1,5 @@
+=== REGISTROS DEL FORMULARIO ===
+Generado: 1/6/2026, 13:49:16
+================================
+
+[1/6/2026, 14:50:26] | Nombre: juan.perez | Email: llalalala

