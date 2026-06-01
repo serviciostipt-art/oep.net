@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuarios</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 { color: #333; text-align: center; margin-bottom: 10px; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 30px; font-size: 14px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #555; font-weight: 600; font-size: 14px; }
+        input {
+            width: 100%; padding: 12px 16px; border: 2px solid #e0e0e0;
+            border-radius: 8px; font-size: 16px; transition: border-color 0.3s;
+        }
+        input:focus { outline: none; border-color: #667eea; }
+        .btn {
+            width: 100%; padding: 14px; border: none; border-radius: 8px;
+            font-size: 16px; font-weight: 600; cursor: pointer;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; transition: transform 0.2s;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .success {
+            background: #d4edda; color: #155724; padding: 12px;
+            border-radius: 8px; margin-bottom: 20px; display: none;
+        }
+        .success.show { display: block; }
+        .error {
+            background: #f8d7da; color: #721c24; padding: 12px;
+            border-radius: 8px; margin-bottom: 20px; display: none;
+        }
+        .error.show { display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Registro de Usuarios</h1>
+        <p class="subtitle">Completa el formulario. Tu información se guardará de forma segura.</p>
+        
+        <div id="successMsg" class="success">✅ ¡Registro enviado correctamente!</div>
+        <div id="errorMsg" class="error">❌ Error al enviar el registro.</div>
+
+        <form id="formulario">
+            <div class="form-group">
+                <label for="nombre">Nombre completo *</label>
+                <input type="text" id="nombre" required placeholder="Ej: María González">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Correo electrónico *</label>
+                <input type="email" id="email" required placeholder="Ej: maria@email.com">
+            </div>
+            
+            <button type="submit" class="btn">💾 Guardar Registro</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('formulario').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const nombre = document.getElementById('nombre').value.trim();
+            const email = document.getElementById('email').value.trim();
+            
+            try {
+                const response = await fetch('/api/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nombre, email })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('successMsg').classList.add('show');
+                    document.getElementById('errorMsg').classList.remove('show');
+                    this.reset();
+                    
+                    setTimeout(() => {
+                        document.getElementById('successMsg').classList.remove('show');
+                    }, 3000);
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (err) {
+                document.getElementById('errorMsg').classList.add('show');
+                document.getElementById('successMsg').classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
